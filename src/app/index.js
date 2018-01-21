@@ -3,36 +3,41 @@ import {createStore} from "redux";
 const initialState = {name:'Two Wheeler Name', price:100000};
 
 const reducer = (state=initialState, action) => {
-	switch (action.type) {
+	var newState;
+    
+    switch (action.type) {
 		case 'UPDATE_NAME':
-            state = {
+            newState = {
                 ...state,
-                name:action.payload,
+                name:action.value,
             }
             break;
 		case 'ADD_PRICE':
-            state = {
+            newState = {
                 ...state,
-                price: Number(state.price) + Number(action.payload),
+                price: Number(state.price) + Number(action.value),
             }
 			break;
         case 'PRICE_DISCOUNT':
-            state = {
+            newState = {
                 ...state,
-                price: Number(state.price) - Number(action.payload),
+                price: Number(state.price) - Number(action.value),
             }
             break;
         case 'QUERY_INITIAL_STATE':
-             break;
+             newState = {
+                ...state,
+             }
+            break;
 	}
-	return state;
+	return newState;
 };
 
 
 const store = createStore(reducer);
 
 store.subscribe(() => {
-	console.log("Store state - ", store.getState());
+	console.log("State in store  - ", store.getState());
 });
 
 
@@ -42,26 +47,26 @@ store.dispatch({
 
 store.dispatch({
 	type: "UPDATE_NAME",
-	payload:"Splendor"
+	value:"Splendor"
 });
 
 store.dispatch({
 	type: "UPDATE_NAME",
-	payload:"Splendor+"
+	value:"Splendor+"
 });
 
 store.dispatch({
 	type: "ADD_PRICE",
-	payload:100
+	value:100
 });
 
 
 store.dispatch({
 	type: "ADD_PRICE",
-	payload:200
+	value:200
 });
 
 store.dispatch({
 	type: "PRICE_DISCOUNT",
-	payload:5000
+	value:5000
 });
